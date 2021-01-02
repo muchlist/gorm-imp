@@ -5,6 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/muchlist/gorm-imp/controllers/pasien_controller"
 	"github.com/muchlist/gorm-imp/controllers/pegawai_controller"
+	"github.com/muchlist/gorm-imp/controllers/terapi_controller"
 	"github.com/muchlist/gorm-imp/database"
 	"github.com/muchlist/gorm-imp/domains/pengeluaran"
 	"github.com/muchlist/gorm-imp/domains/terapi"
@@ -37,6 +38,8 @@ func main() {
 
 	app.Get("/api/pegawai", pegawai_controller.FindPegawai)
 	app.Post("/api/pegawai", pegawai_controller.CreatePegawai)
+
+	app.Post("/api/terapi", terapi_controller.CreateTerapi)
 
 	log.Fatal(app.Listen(":3000"))
 }

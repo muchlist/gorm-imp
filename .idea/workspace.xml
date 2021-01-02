@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9533f2cf-eb70-46ed-bd88-de4c5af8b263" name="Default Changelist" comment="comment">
-      <change afterPath="$PROJECT_DIR$/domains/pasien/pasien_taranslate.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/pegawai/pegawai_translate.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/crypto/crypt.go" afterDir="false" />
+    <list default="true" id="9533f2cf-eb70-46ed-bd88-de4c5af8b263" name="Default Changelist" comment="merubah entity ke format konsumsi user">
+      <change afterPath="$PROJECT_DIR$/controllers/terapi_controller/terapi_controller.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domains/terapi/terapi_translate.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/terapi_services/terapi_service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/pasien_controller/pasien_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/pasien_controller/pasien_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/pegawai_controller/pegawai_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/pegawai_controller/pegawai_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domains/pegawai/pegawai_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/pegawai/pegawai_dto.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/pasien_services/pasien_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/pasien_services/pasien_service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/pegawai_services/pegawai_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/pegawai_services/pegawai_service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/terapi/terapi_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/terapi/terapi_dao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/terapi/terapi_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/terapi/terapi_dto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +77,8 @@
     <MESSAGE value="has many implement" />
     <MESSAGE value="pegawai endpoint" />
     <MESSAGE value="comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="comment" />
+    <MESSAGE value="merubah entity ke format konsumsi user" />
+    <option name="LAST_COMMIT_MESSAGE" value="merubah entity ke format konsumsi user" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
