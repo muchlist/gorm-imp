@@ -24,11 +24,14 @@ func (p *pasienService) Find() []pasien.Pasien {
 func (p *pasienService) Create(data pasien.Pasien) (*pasien.Pasien, rest_err.APIError) {
 
 	pasienData := data
+
+	// NoPasien membutuhkan penomoran yang berbeda antara pasien laki-laki dan perempuan
 	id, err := pasien.PasienDao.GetPasienLastIDWithGender(data.Jk)
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("error create", err)
 	}
 	pasienData.NoPasien = strconv.Itoa(id + 1)
+
 	pasienResponse, err := pasien.PasienDao.Create(pasienData)
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("error create", err)
