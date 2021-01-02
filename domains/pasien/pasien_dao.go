@@ -57,9 +57,9 @@ func (p *pasienDao) Find(gender string) []dto.Pasien {
 		if strings.ToLower(gender) == "p" {
 			genderNum = 1
 		}
-		db.Where("jk = ?", genderNum).Preload("Terapis").Order("id desc").Find(&pasiens)
+		db.Where("jk = ?", genderNum).Preload("Terapis").Order("jumlah_terapi asc").Find(&pasiens)
 	} else {
-		db.Preload("Terapis").Order("id desc").Find(&pasiens)
+		db.Preload("Terapis").Order("jumlah_terapi asc").Find(&pasiens)
 	}
 
 	return pasiens
