@@ -31,12 +31,6 @@ func main() {
 	database.InitDB()
 	DbMigrate()
 
-	//app.Get("/api/v1/book", book_controller.Find)
-	//app.Get("/api/v1/book/:id", book_controller.Get)
-	//app.Delete("/api/v1/book/:id", book_controller.Delete)
-	//app.Post("/api/v1/book", book_controller.Create)
-	//app.Put("/api/v1/book/:id", book_controller.Update)
-
 	app.Get("/api/pasien", pasien_controller.FindPasien)
 	app.Post("/api/pasien", pasien_controller.CreatePasien)
 
