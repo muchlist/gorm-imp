@@ -2,6 +2,7 @@ package terapi
 
 import (
 	"github.com/muchlist/gorm-imp/database"
+	"github.com/muchlist/gorm-imp/domains/pasien"
 	"time"
 )
 
@@ -19,10 +20,33 @@ type terapiDaoInterface interface {
 
 func (p *terapiDao) Create(data Terapi) (Terapi, error) {
 	db := database.DbConn
-	var terapiData = data
-	result := db.Create(&terapiData)
 
-	return terapiData, result.Error
+	tx := db.Begin()
+	var terapiData = data
+	err := tx.Create(&terapiData).Error
+	if err != nil {
+		tx.Rollback()
+		return Terapi{}, err
+	}
+
+	var pasienToUpdate pasien.Pasien
+	err = tx.First(&pasienToUpdate, terapiData.PasienID).Error
+	if err != nil {
+		tx.Rollback()
+		return Terapi{}, err
+	}
+
+	pasienToUpdate.JumlahTerapi = pasienToUpdate.JumlahTerapi + 1
+
+	err = tx.Save(&pasienToUpdate).Error
+	if err != nil {
+		tx.Rollback()
+		return Terapi{}, err
+	}
+
+	tx.Commit()
+
+	return terapiData, nil
 }
 
 func (p *terapiDao) Find() []Terapi {
