@@ -13,8 +13,13 @@ func FindPasien(c *fiber.Ctx) error {
 }
 
 func CreatePasien(c *fiber.Ctx) error {
+
 	var pasienFromBody pasien.PasienRequest
 	err := c.BodyParser(&pasienFromBody)
+	if err != nil {
+		apiErr := rest_err.NewBadRequestError(err.Error())
+		return c.Status(apiErr.Status()).JSON(apiErr)
+	}
 
 	err = pasienFromBody.Validate()
 	if err != nil {
@@ -22,15 +27,7 @@ func CreatePasien(c *fiber.Ctx) error {
 		return c.Status(apiErr.Status()).JSON(apiErr)
 	}
 
-	pasienData := pasien.Pasien{
-		Nama:   pasienFromBody.Nama,
-		NoHp:   pasienFromBody.NoHp,
-		NoWa:   pasienFromBody.NoWa,
-		Alamat: pasienFromBody.Alamat,
-		Jk:     pasienFromBody.Jk,
-	}
-
-	pasienResp, err := pasien_services.PasienService.Create(pasienData)
+	pasienResp, err := pasien_services.PasienService.Create(pasienFromBody)
 	if err != nil {
 		apiErr := rest_err.NewBadRequestError("Input Salah")
 		return c.Status(apiErr.Status()).JSON(apiErr)

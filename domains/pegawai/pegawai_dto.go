@@ -18,11 +18,21 @@ type Pegawai struct {
 }
 
 type PegawaiRequest struct {
-	Nama     string
-	Kontak   string
-	Username string
-	Password string
-	Level    int
+	Nama     string `json:"nama"`
+	Kontak   string `json:"kontak"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Level    int    `json:"level"`
+}
+
+type PegawaiResponse struct {
+	ID           uint   `json:"id"`
+	Nama         string `json:"nama"`
+	Kontak       string `json:"kontak"`
+	Username     string `json:"username"`
+	Level        int    `json:"level"`
+	Terapis      []terapi.Terapi
+	Pengeluarans []pengeluaran.Pengeluaran
 }
 
 func (b PegawaiRequest) Validate() error {

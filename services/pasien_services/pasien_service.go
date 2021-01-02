@@ -14,16 +14,19 @@ type pasienService struct{}
 
 type pasienServiceInterface interface {
 	Find() []pasien.Pasien
-	Create(data pasien.Pasien) (*pasien.Pasien, rest_err.APIError)
+	Create(data pasien.PasienRequest) (*pasien.Pasien, rest_err.APIError)
 }
 
 func (p *pasienService) Find() []pasien.Pasien {
 	return pasien.PasienDao.Find()
 }
 
-func (p *pasienService) Create(data pasien.Pasien) (*pasien.Pasien, rest_err.APIError) {
+func (p *pasienService) Create(data pasien.PasienRequest) (*pasien.Pasien, rest_err.APIError) {
 
-	pasienData := data
+	pasienData, err := pasien.TranslateReqToEntity(data)
+	if err != nil {
+		return nil, rest_err.NewInternalServerError("error mapping pegawai response", err)
+	}
 
 	// NoPasien membutuhkan penomoran yang berbeda antara pasien laki-laki dan perempuan
 	id, err := pasien.PasienDao.GetPasienLastIDWithGender(data.Jk)
@@ -32,7 +35,7 @@ func (p *pasienService) Create(data pasien.Pasien) (*pasien.Pasien, rest_err.API
 	}
 	pasienData.NoPasien = strconv.Itoa(id + 1)
 
-	pasienResponse, err := pasien.PasienDao.Create(pasienData)
+	pasienResponse, err := pasien.PasienDao.Create(*pasienData)
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("error create", err)
 	}

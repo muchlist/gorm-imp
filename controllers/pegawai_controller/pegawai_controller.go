@@ -15,6 +15,10 @@ func FindPegawai(c *fiber.Ctx) error {
 func CreatePegawai(c *fiber.Ctx) error {
 	var pegawaiFromBody pegawai.PegawaiRequest
 	err := c.BodyParser(&pegawaiFromBody)
+	if err != nil {
+		apiErr := rest_err.NewBadRequestError(err.Error())
+		return c.Status(apiErr.Status()).JSON(apiErr)
+	}
 
 	err = pegawaiFromBody.Validate()
 	if err != nil {
