@@ -2,6 +2,7 @@ package terapi_services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"
+	"github.com/muchlist/gorm-imp/domains/dto"
 	"github.com/muchlist/gorm-imp/domains/pegawai"
 	"github.com/muchlist/gorm-imp/domains/terapi"
 	"math/rand"
@@ -15,12 +16,12 @@ var (
 type terapiService struct{}
 
 type terapiServiceInterface interface {
-	Create(data terapi.TerapiRequest) (*terapi.Terapi, rest_err.APIError)
-	Find() []terapi.TerapiResponse
-	FindByDateRange(start, end time.Time) []terapi.TerapiResponse
+	Create(data dto.TerapiRequest) (*dto.Terapi, rest_err.APIError)
+	Find() []dto.TerapiResponse
+	FindByDateRange(start, end time.Time) []dto.TerapiResponse
 }
 
-func (p *terapiService) Create(data terapi.TerapiRequest) (*terapi.Terapi, rest_err.APIError) {
+func (p *terapiService) Create(data dto.TerapiRequest) (*dto.Terapi, rest_err.APIError) {
 
 	terapiData, err := terapi.TranslateResToEntity(data)
 	if err != nil {
@@ -46,8 +47,8 @@ func (p *terapiService) Create(data terapi.TerapiRequest) (*terapi.Terapi, rest_
 	return &terapiResponse, nil
 }
 
-func (p *terapiService) Find() []terapi.TerapiResponse {
-	var terapiListDisplay []terapi.TerapiResponse
+func (p *terapiService) Find() []dto.TerapiResponse {
+	var terapiListDisplay []dto.TerapiResponse
 	terapiList := terapi.TerapiDao.Find()
 	for _, t := range terapiList {
 		terapiDisplay, err := terapi.TranslateEntityToRes(t)
@@ -60,8 +61,8 @@ func (p *terapiService) Find() []terapi.TerapiResponse {
 	return terapiListDisplay
 }
 
-func (p *terapiService) FindByDateRange(start, end time.Time) []terapi.TerapiResponse {
-	var terapiListDisplay []terapi.TerapiResponse
+func (p *terapiService) FindByDateRange(start, end time.Time) []dto.TerapiResponse {
+	var terapiListDisplay []dto.TerapiResponse
 
 	terapiList := terapi.TerapiDao.FindByDateRange(start, end)
 

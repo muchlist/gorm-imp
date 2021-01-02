@@ -2,6 +2,7 @@ package pasien
 
 import (
 	"github.com/muchlist/gorm-imp/database"
+	"github.com/muchlist/gorm-imp/domains/dto"
 	"gorm.io/gorm"
 	"strconv"
 	"strings"
@@ -14,12 +15,12 @@ var (
 type pasienDao struct{}
 
 type pasienDaoInterface interface {
-	Find(gender string) []Pasien
-	Create(data Pasien) (Pasien, error)
+	Find(gender string) []dto.Pasien
+	Create(data dto.Pasien) (dto.Pasien, error)
 	GetPasienLastIDWithGender(gender int) (int, error)
 }
 
-func (p *pasienDao) Create(data Pasien) (Pasien, error) {
+func (p *pasienDao) Create(data dto.Pasien) (dto.Pasien, error) {
 	db := database.DbConn
 	var pasien = data
 	result := db.Create(&pasien)
@@ -33,7 +34,7 @@ func (p *pasienDao) Create(data Pasien) (Pasien, error) {
 
 func (p *pasienDao) GetPasienLastIDWithGender(gender int) (int, error) {
 	db := database.DbConn
-	var pasien Pasien
+	var pasien dto.Pasien
 	result := db.Where("jk = ?", gender).Last(&pasien)
 	if result.Error == gorm.ErrRecordNotFound {
 		return 0, nil
@@ -47,9 +48,9 @@ func (p *pasienDao) GetPasienLastIDWithGender(gender int) (int, error) {
 	return pasienNumber, nil
 }
 
-func (p *pasienDao) Find(gender string) []Pasien {
+func (p *pasienDao) Find(gender string) []dto.Pasien {
 	db := database.DbConn
-	var pasiens []Pasien
+	var pasiens []dto.Pasien
 
 	if gender != "" {
 		genderNum := 0

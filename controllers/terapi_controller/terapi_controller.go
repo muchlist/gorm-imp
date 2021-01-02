@@ -3,12 +3,12 @@ package terapi_controller
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/muchlist/erru_utils_go/rest_err"
-	"github.com/muchlist/gorm-imp/domains/terapi"
+	"github.com/muchlist/gorm-imp/domains/dto"
 	"github.com/muchlist/gorm-imp/services/terapi_services"
 )
 
 func CreateTerapi(c *fiber.Ctx) error {
-	var terapiFromBody terapi.TerapiRequest
+	var terapiFromBody dto.TerapiRequest
 	err := c.BodyParser(&terapiFromBody)
 	if err != nil {
 		apiErr := rest_err.NewBadRequestError(err.Error())
@@ -36,7 +36,7 @@ func FindTerapi(c *fiber.Ctx) error {
 }
 
 func FindTerapiByRange(c *fiber.Ctx) error {
-	var terapiBody terapi.TerapiRequestByRange
+	var terapiBody dto.TerapiRequestByRange
 	err := c.BodyParser(&terapiBody)
 	if err != nil {
 		apiErr := rest_err.NewBadRequestError(err.Error())

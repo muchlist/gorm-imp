@@ -2,6 +2,7 @@ package pegawai_services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"
+	"github.com/muchlist/gorm-imp/domains/dto"
 	"github.com/muchlist/gorm-imp/domains/pegawai"
 	"github.com/muchlist/gorm-imp/utils/crypto"
 )
@@ -13,12 +14,12 @@ var (
 type pegawaiService struct{}
 
 type pegawaiServiceInterface interface {
-	Find() []pegawai.PegawaiResponse
-	Create(data pegawai.Pegawai) (*pegawai.PegawaiResponse, rest_err.APIError)
+	Find() []dto.PegawaiResponse
+	Create(data dto.Pegawai) (*dto.PegawaiResponse, rest_err.APIError)
 }
 
-func (p *pegawaiService) Find() []pegawai.PegawaiResponse {
-	var pegawaiListDisplay []pegawai.PegawaiResponse
+func (p *pegawaiService) Find() []dto.PegawaiResponse {
+	var pegawaiListDisplay []dto.PegawaiResponse
 	pegawaiList := pegawai.PegawaiDao.Find()
 	for _, p := range pegawaiList {
 		pegawaiDisplay, err := pegawai.TranslateEntityToRes(p)
@@ -31,7 +32,7 @@ func (p *pegawaiService) Find() []pegawai.PegawaiResponse {
 	return pegawaiListDisplay
 }
 
-func (p *pegawaiService) Create(data pegawai.Pegawai) (*pegawai.PegawaiResponse, rest_err.APIError) {
+func (p *pegawaiService) Create(data dto.Pegawai) (*dto.PegawaiResponse, rest_err.APIError) {
 	pegawaiData := data
 
 	// Hash password menggunakan bcrypt

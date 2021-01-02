@@ -1,4 +1,4 @@
-package pengeluaran
+package dto
 
 import (
 	"time"

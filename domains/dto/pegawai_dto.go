@@ -1,9 +1,7 @@
-package pegawai
+package dto
 
 import (
 	validation "github.com/go-ozzo/ozzo-validation/v4"
-	"github.com/muchlist/gorm-imp/domains/pengeluaran"
-	"github.com/muchlist/gorm-imp/domains/terapi"
 )
 
 type Pegawai struct {
@@ -12,9 +10,9 @@ type Pegawai struct {
 	Kontak       string
 	Username     string
 	Password     string
-	Level        int                       // 0 user , 1 admin, 2 superadmin
-	Terapis      []terapi.Terapi           `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;foreignKey:PegawaiID"`
-	Pengeluarans []pengeluaran.Pengeluaran `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;foreignKey:PegawaiID"`
+	Level        int           // 0 user , 1 admin, 2 superadmin
+	Terapis      []Terapi      `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;foreignKey:PegawaiID"`
+	Pengeluarans []Pengeluaran `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;foreignKey:PegawaiID"`
 }
 
 type PegawaiRequest struct {
@@ -31,8 +29,8 @@ type PegawaiResponse struct {
 	Kontak       string `json:"kontak"`
 	Username     string `json:"username"`
 	Level        int    `json:"level"`
-	Terapis      []terapi.Terapi
-	Pengeluarans []pengeluaran.Pengeluaran
+	Terapis      []Terapi
+	Pengeluarans []Pengeluaran
 }
 
 func (b PegawaiRequest) Validate() error {

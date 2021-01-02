@@ -2,6 +2,7 @@ package pasien_services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"
+	"github.com/muchlist/gorm-imp/domains/dto"
 	"github.com/muchlist/gorm-imp/domains/pasien"
 	"strconv"
 )
@@ -13,15 +14,15 @@ var (
 type pasienService struct{}
 
 type pasienServiceInterface interface {
-	Find(gender string) []pasien.Pasien
-	Create(data pasien.PasienRequest) (*pasien.Pasien, rest_err.APIError)
+	Find(gender string) []dto.Pasien
+	Create(data dto.PasienRequest) (*dto.Pasien, rest_err.APIError)
 }
 
-func (p *pasienService) Find(gender string) []pasien.Pasien {
+func (p *pasienService) Find(gender string) []dto.Pasien {
 	return pasien.PasienDao.Find(gender)
 }
 
-func (p *pasienService) Create(data pasien.PasienRequest) (*pasien.Pasien, rest_err.APIError) {
+func (p *pasienService) Create(data dto.PasienRequest) (*dto.Pasien, rest_err.APIError) {
 
 	pasienData, err := pasien.TranslateReqToEntity(data)
 	if err != nil {
