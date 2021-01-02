@@ -29,3 +29,20 @@ func CreateTerapi(c *fiber.Ctx) error {
 
 	return c.JSON(terapiResp)
 }
+
+func FindTerapi(c *fiber.Ctx) error {
+	terapiData := terapi_services.TerapiService.Find()
+	return c.JSON(terapiData)
+}
+
+func FindTerapiByRange(c *fiber.Ctx) error {
+	var terapiBody terapi.TerapiRequestByRange
+	err := c.BodyParser(&terapiBody)
+	if err != nil {
+		apiErr := rest_err.NewBadRequestError(err.Error())
+		return c.Status(apiErr.Status()).JSON(apiErr)
+	}
+
+	terapiData := terapi_services.TerapiService.FindByDateRange(terapiBody.StarDate, terapiBody.EndDate)
+	return c.JSON(terapiData)
+}

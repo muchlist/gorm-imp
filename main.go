@@ -39,6 +39,8 @@ func main() {
 	app.Get("/api/pegawai", pegawai_controller.FindPegawai)
 	app.Post("/api/pegawai", pegawai_controller.CreatePegawai)
 
+	app.Get("/api/terapi", terapi_controller.FindTerapi)
+	app.Post("/api/terapi-range", terapi_controller.FindTerapiByRange)
 	app.Post("/api/terapi", terapi_controller.CreateTerapi)
 
 	log.Fatal(app.Listen(":3000"))

@@ -10,3 +10,12 @@ func TranslateResToEntity(data TerapiRequest) (*Terapi, error) {
 	}
 	return &terapiEntity, err
 }
+
+func TranslateEntityToRes(data Terapi) (*TerapiResponse, error) {
+	terapiResponse := TerapiResponse{}
+	err := smapping.FillStruct(&terapiResponse, smapping.MapFields(&data))
+	if err != nil {
+		return nil, err
+	}
+	return &terapiResponse, err
+}

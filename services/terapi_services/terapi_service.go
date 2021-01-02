@@ -16,6 +16,8 @@ type terapiService struct{}
 
 type terapiServiceInterface interface {
 	Create(data terapi.TerapiRequest) (*terapi.Terapi, rest_err.APIError)
+	Find() []terapi.TerapiResponse
+	FindByDateRange(start, end time.Time) []terapi.TerapiResponse
 }
 
 func (p *terapiService) Create(data terapi.TerapiRequest) (*terapi.Terapi, rest_err.APIError) {
@@ -42,4 +44,34 @@ func (p *terapiService) Create(data terapi.TerapiRequest) (*terapi.Terapi, rest_
 	}
 
 	return &terapiResponse, nil
+}
+
+func (p *terapiService) Find() []terapi.TerapiResponse {
+	var terapiListDisplay []terapi.TerapiResponse
+	terapiList := terapi.TerapiDao.Find()
+	for _, t := range terapiList {
+		terapiDisplay, err := terapi.TranslateEntityToRes(t)
+		if err != nil {
+			continue
+		}
+		terapiListDisplay = append(terapiListDisplay, *terapiDisplay)
+	}
+
+	return terapiListDisplay
+}
+
+func (p *terapiService) FindByDateRange(start, end time.Time) []terapi.TerapiResponse {
+	var terapiListDisplay []terapi.TerapiResponse
+
+	terapiList := terapi.TerapiDao.FindByDateRange(start, end)
+
+	for _, t := range terapiList {
+		terapiDisplay, err := terapi.TranslateEntityToRes(t)
+		if err != nil {
+			continue
+		}
+		terapiListDisplay = append(terapiListDisplay, *terapiDisplay)
+	}
+
+	return terapiListDisplay
 }

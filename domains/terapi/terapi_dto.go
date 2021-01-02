@@ -28,6 +28,18 @@ func (b TerapiRequest) Validate() error {
 	)
 }
 
+type TerapiRequestByRange struct {
+	StarDate time.Time `json:"star_date"`
+	EndDate  time.Time `json:"end_date"`
+}
+
+func (b TerapiRequestByRange) Validate() error {
+	return validation.ValidateStruct(&b,
+		validation.Field(&b.StarDate, validation.Required, validation.Date(time.ANSIC)), //2021-01-02T19:49:58.828478+08:00
+		validation.Field(&b.EndDate, validation.Required, validation.Date(time.ANSIC)),
+	)
+}
+
 type TerapiResponse struct {
 	ID        uint      `json:"id"`
 	PasienID  uint      `json:"pasien_id"`
