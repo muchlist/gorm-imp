@@ -5,10 +5,22 @@ import (
 	"github.com/muchlist/erru_utils_go/rest_err"
 	"github.com/muchlist/gorm-imp/domains/pasien"
 	"github.com/muchlist/gorm-imp/services/pasien_services"
+	"strings"
 )
 
 func FindPasien(c *fiber.Ctx) error {
-	pasienData := pasien_services.PasienService.Find()
+	gender := c.Query("gender")
+	// validation
+	if gender != "" {
+		// jika gender query berisi selain l atau p maka dianggap kosong
+		if !(strings.ToLower(gender) == "l") || (strings.ToLower(gender) == "p") {
+			gender = ""
+		}
+	}
+
+	println(gender)
+
+	pasienData := pasien_services.PasienService.Find(gender)
 	return c.JSON(pasienData)
 }
 

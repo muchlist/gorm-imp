@@ -13,12 +13,12 @@ var (
 type pasienService struct{}
 
 type pasienServiceInterface interface {
-	Find() []pasien.Pasien
+	Find(gender string) []pasien.Pasien
 	Create(data pasien.PasienRequest) (*pasien.Pasien, rest_err.APIError)
 }
 
-func (p *pasienService) Find() []pasien.Pasien {
-	return pasien.PasienDao.Find()
+func (p *pasienService) Find(gender string) []pasien.Pasien {
+	return pasien.PasienDao.Find(gender)
 }
 
 func (p *pasienService) Create(data pasien.PasienRequest) (*pasien.Pasien, rest_err.APIError) {

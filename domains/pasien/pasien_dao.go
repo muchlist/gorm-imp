@@ -4,6 +4,7 @@ import (
 	"github.com/muchlist/gorm-imp/database"
 	"gorm.io/gorm"
 	"strconv"
+	"strings"
 )
 
 var (
@@ -13,7 +14,7 @@ var (
 type pasienDao struct{}
 
 type pasienDaoInterface interface {
-	Find() []Pasien
+	Find(gender string) []Pasien
 	Create(data Pasien) (Pasien, error)
 	GetPasienLastIDWithGender(gender int) (int, error)
 }
@@ -46,10 +47,19 @@ func (p *pasienDao) GetPasienLastIDWithGender(gender int) (int, error) {
 	return pasienNumber, nil
 }
 
-func (p *pasienDao) Find() []Pasien {
+func (p *pasienDao) Find(gender string) []Pasien {
 	db := database.DbConn
 	var pasiens []Pasien
-	db.Find(&pasiens)
+
+	if gender != "" {
+		genderNum := 0
+		if strings.ToLower(gender) == "p" {
+			genderNum = 1
+		}
+		db.Where("jk = ?", genderNum).Preload("Terapis").Order("id desc").Find(&pasiens)
+	} else {
+		db.Preload("Terapis").Order("id desc").Find(&pasiens)
+	}
 
 	return pasiens
 }
