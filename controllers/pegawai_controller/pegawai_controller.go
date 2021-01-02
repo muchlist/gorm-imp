@@ -26,15 +26,7 @@ func CreatePegawai(c *fiber.Ctx) error {
 		return c.Status(apiErr.Status()).JSON(apiErr)
 	}
 
-	pegawaiData := dto.Pegawai{
-		Nama:     pegawaiFromBody.Nama,
-		Kontak:   pegawaiFromBody.Kontak,
-		Username: pegawaiFromBody.Username,
-		Password: pegawaiFromBody.Password,
-		Level:    pegawaiFromBody.Level,
-	}
-
-	pegawaiResp, err := pegawai_services.PegawaiService.Create(pegawaiData)
+	pegawaiResp, err := pegawai_services.PegawaiService.Create(pegawaiFromBody)
 	if err != nil {
 		apiErr := rest_err.NewBadRequestError("Input Salah")
 		return c.Status(apiErr.Status()).JSON(apiErr)

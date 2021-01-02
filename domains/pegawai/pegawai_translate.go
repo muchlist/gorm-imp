@@ -13,3 +13,12 @@ func TranslateEntityToRes(data dto.Pegawai) (*dto.PegawaiResponse, error) {
 	}
 	return &pegawaiResponse, err
 }
+
+func TranslateReqToEntity(data dto.PegawaiRequest) (*dto.Pegawai, error) {
+	pegawaiEntity := dto.Pegawai{}
+	err := smapping.FillStruct(&pegawaiEntity, smapping.MapFields(&data))
+	if err != nil {
+		return nil, err
+	}
+	return &pegawaiEntity, err
+}

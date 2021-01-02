@@ -6,17 +6,17 @@ import (
 )
 
 var (
-	PegawaiDao PegawaiDaoInterface = &pasienDao{}
+	PegawaiDao PegawaiDaoInterface = &pegawaiDao{}
 )
 
-type pasienDao struct{}
+type pegawaiDao struct{}
 
 type PegawaiDaoInterface interface {
 	Find() []dto.Pegawai
 	Create(data dto.Pegawai) (dto.Pegawai, error)
 }
 
-func (p *pasienDao) Create(data dto.Pegawai) (dto.Pegawai, error) {
+func (p *pegawaiDao) Create(data dto.Pegawai) (dto.Pegawai, error) {
 	db := database.DbConn
 	var pegawai = data
 	result := db.Create(&pegawai)
@@ -24,7 +24,7 @@ func (p *pasienDao) Create(data dto.Pegawai) (dto.Pegawai, error) {
 	return pegawai, result.Error
 }
 
-func (p *pasienDao) Find() []dto.Pegawai {
+func (p *pegawaiDao) Find() []dto.Pegawai {
 	db := database.DbConn
 	var pegawais []dto.Pegawai
 	db.Find(&pegawais)

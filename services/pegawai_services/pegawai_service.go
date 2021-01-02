@@ -15,7 +15,7 @@ type pegawaiService struct{}
 
 type pegawaiServiceInterface interface {
 	Find() []dto.PegawaiResponse
-	Create(data dto.Pegawai) (*dto.PegawaiResponse, rest_err.APIError)
+	Create(data dto.PegawaiRequest) (*dto.PegawaiResponse, rest_err.APIError)
 }
 
 func (p *pegawaiService) Find() []dto.PegawaiResponse {
@@ -32,14 +32,17 @@ func (p *pegawaiService) Find() []dto.PegawaiResponse {
 	return pegawaiListDisplay
 }
 
-func (p *pegawaiService) Create(data dto.Pegawai) (*dto.PegawaiResponse, rest_err.APIError) {
-	pegawaiData := data
+func (p *pegawaiService) Create(data dto.PegawaiRequest) (*dto.PegawaiResponse, rest_err.APIError) {
+	pegawaiData, err := pegawai.TranslateReqToEntity(data)
+	if err != nil {
+		return nil, rest_err.NewInternalServerError("gagal mapping pegawaiReq ke pegawai", err)
+	}
 
 	// Hash password menggunakan bcrypt
 	hashedpassword, _ := crypto.Obj.GenerateHash(pegawaiData.Password)
 	pegawaiData.Password = hashedpassword
 
-	pegawaiResponse, err := pegawai.PegawaiDao.Create(pegawaiData)
+	pegawaiResponse, err := pegawai.PegawaiDao.Create(*pegawaiData)
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("error create", err)
 	}
