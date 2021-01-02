@@ -1,4 +1,4 @@
-package pasiens_services
+package pasien_services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"

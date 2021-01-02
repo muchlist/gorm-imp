@@ -4,11 +4,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/muchlist/erru_utils_go/rest_err"
 	"github.com/muchlist/gorm-imp/domains/pasien"
-	"github.com/muchlist/gorm-imp/services/pasiens_services"
+	"github.com/muchlist/gorm-imp/services/pasien_services"
 )
 
 func FindPasien(c *fiber.Ctx) error {
-	pasienData := pasiens_services.PasienService.Find()
+	pasienData := pasien_services.PasienService.Find()
 	return c.JSON(pasienData)
 }
 
@@ -30,7 +30,7 @@ func CreatePasien(c *fiber.Ctx) error {
 		Jk:     pasienFromBody.Jk,
 	}
 
-	pasienResp, err := pasiens_services.PasienService.Create(pasienData)
+	pasienResp, err := pasien_services.PasienService.Create(pasienData)
 	if err != nil {
 		apiErr := rest_err.NewBadRequestError("Input Salah")
 		return c.Status(apiErr.Status()).JSON(apiErr)

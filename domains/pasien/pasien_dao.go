@@ -20,7 +20,7 @@ type pasienDaoInterface interface {
 
 func (p *pasienDao) Create(data Pasien) (Pasien, error) {
 	db := database.DbConn
-	var pasien Pasien = data
+	var pasien = data
 	result := db.Create(&pasien)
 
 	// pasien.ID             // returns inserted data's primary key

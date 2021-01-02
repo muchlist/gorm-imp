@@ -27,7 +27,7 @@ type PasienRequest struct {
 func (b PasienRequest) Validate() error {
 	return validation.ValidateStruct(&b,
 		validation.Field(&b.Nama, validation.Required),
-		validation.Field(&b.Jk, validation.Required, validation.Max(1)),
+		validation.Field(&b.Jk, validation.Max(1)),
 		validation.Field(&b.NoHp, validation.Required),
 		validation.Field(&b.NoWa, validation.Required),
 		validation.Field(&b.Alamat, validation.Required),
