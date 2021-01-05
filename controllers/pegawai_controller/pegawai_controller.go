@@ -8,7 +8,10 @@ import (
 )
 
 func FindPegawai(c *fiber.Ctx) error {
-	pegawaiData := services.PegawaiService.Find()
+	pegawaiData, apiErr := services.PegawaiService.Find()
+	if apiErr != nil {
+		return c.Status(apiErr.Status()).JSON(apiErr)
+	}
 	return c.JSON(pegawaiData)
 }
 

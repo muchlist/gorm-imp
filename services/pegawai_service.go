@@ -14,13 +14,16 @@ var (
 type pegawaiService struct{}
 
 type pegawaiServiceInterface interface {
-	Find() []dto2.PegawaiResponse
+	Find() ([]dto2.PegawaiResponse, rest_err.APIError)
 	Create(data dto2.PegawaiRequest) (*dto2.PegawaiResponse, rest_err.APIError)
 }
 
-func (p *pegawaiService) Find() []dto2.PegawaiResponse {
+func (p *pegawaiService) Find() ([]dto2.PegawaiResponse, rest_err.APIError) {
 	var pegawaiListDisplay []dto2.PegawaiResponse
-	pegawaiList := dao.PegawaiDao.Find()
+	pegawaiList, err := dao.PegawaiDao.Find()
+	if err != nil {
+		return nil, rest_err.NewInternalServerError("gagal query pegawai", err)
+	}
 	for _, p := range pegawaiList {
 		pegawaiDisplay, err := p.TranslateToResponse()
 		if err != nil {
@@ -29,7 +32,7 @@ func (p *pegawaiService) Find() []dto2.PegawaiResponse {
 		pegawaiListDisplay = append(pegawaiListDisplay, *pegawaiDisplay)
 	}
 
-	return pegawaiListDisplay
+	return pegawaiListDisplay, nil
 }
 
 func (p *pegawaiService) Create(data dto2.PegawaiRequest) (*dto2.PegawaiResponse, rest_err.APIError) {
