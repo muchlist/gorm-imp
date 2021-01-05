@@ -4,11 +4,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/muchlist/erru_utils_go/rest_err"
 	dto2 "github.com/muchlist/gorm-imp/dto"
-	"github.com/muchlist/gorm-imp/services/pegawai_services"
+	"github.com/muchlist/gorm-imp/services"
 )
 
 func FindPegawai(c *fiber.Ctx) error {
-	pegawaiData := pegawai_services.PegawaiService.Find()
+	pegawaiData := services.PegawaiService.Find()
 	return c.JSON(pegawaiData)
 }
 
@@ -26,7 +26,7 @@ func CreatePegawai(c *fiber.Ctx) error {
 		return c.Status(apiErr.Status()).JSON(apiErr)
 	}
 
-	pegawaiResp, err := pegawai_services.PegawaiService.Create(pegawaiFromBody)
+	pegawaiResp, err := services.PegawaiService.Create(pegawaiFromBody)
 	if err != nil {
 		apiErr := rest_err.NewBadRequestError("Input Salah")
 		return c.Status(apiErr.Status()).JSON(apiErr)

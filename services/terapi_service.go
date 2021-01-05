@@ -1,4 +1,4 @@
-package terapi_services
+package services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"

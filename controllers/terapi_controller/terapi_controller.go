@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/muchlist/erru_utils_go/rest_err"
 	dto2 "github.com/muchlist/gorm-imp/dto"
-	"github.com/muchlist/gorm-imp/services/terapi_services"
+	"github.com/muchlist/gorm-imp/services"
 )
 
 func CreateTerapi(c *fiber.Ctx) error {
@@ -21,7 +21,7 @@ func CreateTerapi(c *fiber.Ctx) error {
 		return c.Status(apiErr.Status()).JSON(apiErr)
 	}
 
-	terapiResp, err := terapi_services.TerapiService.Create(terapiFromBody)
+	terapiResp, err := services.TerapiService.Create(terapiFromBody)
 	if err != nil {
 		apiErr := rest_err.NewInternalServerError("Kesalahan dalam insert terapi", err)
 		return c.Status(apiErr.Status()).JSON(apiErr)
@@ -31,7 +31,7 @@ func CreateTerapi(c *fiber.Ctx) error {
 }
 
 func FindTerapi(c *fiber.Ctx) error {
-	terapiData := terapi_services.TerapiService.Find()
+	terapiData := services.TerapiService.Find()
 	return c.JSON(terapiData)
 }
 
@@ -43,6 +43,6 @@ func FindTerapiByRange(c *fiber.Ctx) error {
 		return c.Status(apiErr.Status()).JSON(apiErr)
 	}
 
-	terapiData := terapi_services.TerapiService.FindByDateRange(terapiBody.StarDate, terapiBody.EndDate)
+	terapiData := services.TerapiService.FindByDateRange(terapiBody.StarDate, terapiBody.EndDate)
 	return c.JSON(terapiData)
 }

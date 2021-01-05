@@ -4,11 +4,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/muchlist/erru_utils_go/rest_err"
 	dto2 "github.com/muchlist/gorm-imp/dto"
-	"github.com/muchlist/gorm-imp/services/pengeluaran_services"
+	"github.com/muchlist/gorm-imp/services"
 )
 
 func FindPengeluaran(c *fiber.Ctx) error {
-	pengeluaranData := pengeluaran_services.PengeluaranService.Find()
+	pengeluaranData := services.PengeluaranService.Find()
 	return c.JSON(pengeluaranData)
 }
 
@@ -26,7 +26,7 @@ func CreatePengeluaran(c *fiber.Ctx) error {
 		return c.Status(apiErr.Status()).JSON(apiErr)
 	}
 
-	pengeluaranResp, err := pengeluaran_services.PengeluaranService.Create(pengeluaranFromBody)
+	pengeluaranResp, err := services.PengeluaranService.Create(pengeluaranFromBody)
 	if err != nil {
 		apiErr := rest_err.NewBadRequestError("Input Salah")
 		return c.Status(apiErr.Status()).JSON(apiErr)
