@@ -1,4 +1,4 @@
-package pegawai
+package dao
 
 import (
 	"github.com/muchlist/gorm-imp/database"

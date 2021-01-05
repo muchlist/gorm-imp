@@ -2,7 +2,7 @@ package pengeluaran_services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"
-	"github.com/muchlist/gorm-imp/domains/pengeluaran"
+	"github.com/muchlist/gorm-imp/dao"
 	dto2 "github.com/muchlist/gorm-imp/dto"
 	"time"
 )
@@ -19,7 +19,7 @@ type pengeluaranServiceInterface interface {
 }
 
 func (p *pengeluaranService) Find() []dto2.Pengeluaran {
-	pengeluaranList := pengeluaran.PengeluaranDao.Find()
+	pengeluaranList := dao.PengeluaranDao.Find()
 	return pengeluaranList
 }
 
@@ -29,7 +29,7 @@ func (p *pengeluaranService) Create(data dto2.PengeluaranRequest) (*dto2.Pengelu
 		return nil, rest_err.NewInternalServerError("gagal mapping pengeluaranRequest ke pengeluaran", err)
 	}
 	pengeluaranData.Tanggal = time.Now()
-	pengeluaranResponse, err := pengeluaran.PengeluaranDao.Create(*pengeluaranData)
+	pengeluaranResponse, err := dao.PengeluaranDao.Create(*pengeluaranData)
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("error create", err)
 	}

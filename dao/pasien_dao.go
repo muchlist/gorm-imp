@@ -1,4 +1,4 @@
-package pasien
+package dao
 
 import (
 	"github.com/muchlist/gorm-imp/database"

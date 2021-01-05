@@ -2,7 +2,7 @@ package pegawai_services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"
-	"github.com/muchlist/gorm-imp/domains/pegawai"
+	"github.com/muchlist/gorm-imp/dao"
 	dto2 "github.com/muchlist/gorm-imp/dto"
 	"github.com/muchlist/gorm-imp/utils/crypto"
 )
@@ -20,7 +20,7 @@ type pegawaiServiceInterface interface {
 
 func (p *pegawaiService) Find() []dto2.PegawaiResponse {
 	var pegawaiListDisplay []dto2.PegawaiResponse
-	pegawaiList := pegawai.PegawaiDao.Find()
+	pegawaiList := dao.PegawaiDao.Find()
 	for _, p := range pegawaiList {
 		pegawaiDisplay, err := p.TranslateToResponse()
 		if err != nil {
@@ -42,7 +42,7 @@ func (p *pegawaiService) Create(data dto2.PegawaiRequest) (*dto2.PegawaiResponse
 	hashedpassword, _ := crypto.Obj.GenerateHash(pegawaiData.Password)
 	pegawaiData.Password = hashedpassword
 
-	pegawaiResponse, err := pegawai.PegawaiDao.Create(*pegawaiData)
+	pegawaiResponse, err := dao.PegawaiDao.Create(*pegawaiData)
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("error create", err)
 	}

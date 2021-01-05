@@ -2,8 +2,7 @@ package terapi_services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"
-	"github.com/muchlist/gorm-imp/domains/pegawai"
-	"github.com/muchlist/gorm-imp/domains/terapi"
+	"github.com/muchlist/gorm-imp/dao"
 	dto2 "github.com/muchlist/gorm-imp/dto"
 	"math/rand"
 	"time"
@@ -31,7 +30,7 @@ func (p *terapiService) Create(data dto2.TerapiRequest) (*dto2.Terapi, rest_err.
 	terapiData.Tglterapi = time.Now()
 
 	//Pegawai ID dipilih secara random
-	pegawaiList := pegawai.PegawaiDao.Find()
+	pegawaiList := dao.PegawaiDao.Find()
 	rand.Seed(time.Now().Unix())
 	indexRandom := rand.Intn(len(pegawaiList) - 1)
 	terapiData.PegawaiID = pegawaiList[indexRandom].ID
@@ -39,7 +38,7 @@ func (p *terapiService) Create(data dto2.TerapiRequest) (*dto2.Terapi, rest_err.
 	//upah diisi dengan 25% biaya
 	terapiData.Upah = terapiData.Biaya * 0.25
 
-	terapiResponse, err := terapi.TerapiDao.Create(*terapiData)
+	terapiResponse, err := dao.TerapiDao.Create(*terapiData)
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("error create", err)
 	}
@@ -49,7 +48,7 @@ func (p *terapiService) Create(data dto2.TerapiRequest) (*dto2.Terapi, rest_err.
 
 func (p *terapiService) Find() []dto2.TerapiResponse {
 	var terapiListDisplay []dto2.TerapiResponse
-	terapiList := terapi.TerapiDao.Find()
+	terapiList := dao.TerapiDao.Find()
 	for _, t := range terapiList {
 		terapiDisplay, err := t.TranslateToRes()
 		if err != nil {
@@ -64,7 +63,7 @@ func (p *terapiService) Find() []dto2.TerapiResponse {
 func (p *terapiService) FindByDateRange(start, end time.Time) []dto2.TerapiResponse {
 	var terapiListDisplay []dto2.TerapiResponse
 
-	terapiList := terapi.TerapiDao.FindByDateRange(start, end)
+	terapiList := dao.TerapiDao.FindByDateRange(start, end)
 
 	for _, t := range terapiList {
 		terapiDisplay, err := t.TranslateToRes()

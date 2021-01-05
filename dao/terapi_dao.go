@@ -1,4 +1,4 @@
-package terapi
+package dao
 
 import (
 	"github.com/muchlist/gorm-imp/database"

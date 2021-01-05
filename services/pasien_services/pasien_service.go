@@ -2,7 +2,7 @@ package pasien_services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"
-	"github.com/muchlist/gorm-imp/domains/pasien"
+	"github.com/muchlist/gorm-imp/dao"
 	dto2 "github.com/muchlist/gorm-imp/dto"
 	"strconv"
 )
@@ -19,7 +19,7 @@ type pasienServiceInterface interface {
 }
 
 func (p *pasienService) Find(gender string) []dto2.Pasien {
-	return pasien.PasienDao.Find(gender)
+	return dao.PasienDao.Find(gender)
 }
 
 func (p *pasienService) Create(data dto2.PasienRequest) (*dto2.Pasien, rest_err.APIError) {
@@ -30,13 +30,13 @@ func (p *pasienService) Create(data dto2.PasienRequest) (*dto2.Pasien, rest_err.
 	}
 
 	// NoPasien membutuhkan penomoran yang berbeda antara pasien laki-laki dan perempuan
-	id, err := pasien.PasienDao.GetPasienLastIDWithGender(data.Jk)
+	id, err := dao.PasienDao.GetPasienLastIDWithGender(data.Jk)
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("error create", err)
 	}
 	pasienData.NoPasien = strconv.Itoa(id + 1)
 
-	pasienResponse, err := pasien.PasienDao.Create(*pasienData)
+	pasienResponse, err := dao.PasienDao.Create(*pasienData)
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("error create", err)
 	}

@@ -1,4 +1,4 @@
-package pengeluaran
+package dao
 
 import (
 	"github.com/muchlist/gorm-imp/database"
