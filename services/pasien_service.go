@@ -14,12 +14,16 @@ var (
 type pasienService struct{}
 
 type pasienServiceInterface interface {
-	Find(gender string) []dto2.Pasien
+	Find(gender string) ([]dto2.Pasien, rest_err.APIError)
 	Create(data dto2.PasienRequest) (*dto2.Pasien, rest_err.APIError)
 }
 
-func (p *pasienService) Find(gender string) []dto2.Pasien {
-	return dao.PasienDao.Find(gender)
+func (p *pasienService) Find(gender string) ([]dto2.Pasien, rest_err.APIError) {
+	pasiens, err := dao.PasienDao.Find(gender)
+	if err != nil {
+		return nil, rest_err.NewInternalServerError("gagal melakukan query pasiens", err)
+	}
+	return pasiens, nil
 }
 
 func (p *pasienService) Create(data dto2.PasienRequest) (*dto2.Pasien, rest_err.APIError) {
@@ -41,5 +45,5 @@ func (p *pasienService) Create(data dto2.PasienRequest) (*dto2.Pasien, rest_err.
 		return nil, rest_err.NewInternalServerError("error create", err)
 	}
 
-	return &pasienResponse, nil
+	return pasienResponse, nil
 }

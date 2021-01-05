@@ -20,7 +20,10 @@ func FindPasien(c *fiber.Ctx) error {
 
 	println(gender)
 
-	pasienData := services.PasienService.Find(gender)
+	pasienData, apiErr := services.PasienService.Find(gender)
+	if apiErr != nil {
+		return c.Status(apiErr.Status()).JSON(apiErr)
+	}
 	return c.JSON(pasienData)
 }
 
