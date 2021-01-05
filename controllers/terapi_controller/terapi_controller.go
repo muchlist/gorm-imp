@@ -31,7 +31,10 @@ func CreateTerapi(c *fiber.Ctx) error {
 }
 
 func FindTerapi(c *fiber.Ctx) error {
-	terapiData := services.TerapiService.Find()
+	terapiData, apiErr := services.TerapiService.Find()
+	if apiErr != nil {
+		return c.Status(apiErr.Status()).JSON(apiErr)
+	}
 	return c.JSON(terapiData)
 }
 
@@ -43,6 +46,9 @@ func FindTerapiByRange(c *fiber.Ctx) error {
 		return c.Status(apiErr.Status()).JSON(apiErr)
 	}
 
-	terapiData := services.TerapiService.FindByDateRange(terapiBody.StarDate, terapiBody.EndDate)
+	terapiData, apiErr := services.TerapiService.FindByDateRange(terapiBody.StarDate, terapiBody.EndDate)
+	if apiErr != nil {
+		return c.Status(apiErr.Status()).JSON(apiErr)
+	}
 	return c.JSON(terapiData)
 }

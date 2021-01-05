@@ -16,8 +16,8 @@ type terapiService struct{}
 
 type terapiServiceInterface interface {
 	Create(data dto2.TerapiRequest) (*dto2.Terapi, rest_err.APIError)
-	Find() []dto2.TerapiResponse
-	FindByDateRange(start, end time.Time) []dto2.TerapiResponse
+	Find() ([]dto2.TerapiResponse, rest_err.APIError)
+	FindByDateRange(start, end time.Time) ([]dto2.TerapiResponse, rest_err.APIError)
 }
 
 func (p *terapiService) Create(data dto2.TerapiRequest) (*dto2.Terapi, rest_err.APIError) {
@@ -30,7 +30,10 @@ func (p *terapiService) Create(data dto2.TerapiRequest) (*dto2.Terapi, rest_err.
 	terapiData.Tglterapi = time.Now()
 
 	//Pegawai ID dipilih secara random
-	pegawaiList := dao.PegawaiDao.Find()
+	pegawaiList, err := dao.PegawaiDao.Find()
+	if err != nil {
+		return nil, rest_err.NewInternalServerError("gagal query pegawwai", err)
+	}
 	rand.Seed(time.Now().Unix())
 	indexRandom := rand.Intn(len(pegawaiList) - 1)
 	terapiData.PegawaiID = pegawaiList[indexRandom].ID
@@ -43,12 +46,15 @@ func (p *terapiService) Create(data dto2.TerapiRequest) (*dto2.Terapi, rest_err.
 		return nil, rest_err.NewInternalServerError("error create", err)
 	}
 
-	return &terapiResponse, nil
+	return terapiResponse, nil
 }
 
-func (p *terapiService) Find() []dto2.TerapiResponse {
+func (p *terapiService) Find() ([]dto2.TerapiResponse, rest_err.APIError) {
 	var terapiListDisplay []dto2.TerapiResponse
-	terapiList := dao.TerapiDao.Find()
+	terapiList, err := dao.TerapiDao.Find()
+	if err != nil {
+		return nil, rest_err.NewInternalServerError("gagal query terapi", err)
+	}
 	for _, t := range terapiList {
 		terapiDisplay, err := t.TranslateToRes()
 		if err != nil {
@@ -57,13 +63,16 @@ func (p *terapiService) Find() []dto2.TerapiResponse {
 		terapiListDisplay = append(terapiListDisplay, *terapiDisplay)
 	}
 
-	return terapiListDisplay
+	return terapiListDisplay, nil
 }
 
-func (p *terapiService) FindByDateRange(start, end time.Time) []dto2.TerapiResponse {
+func (p *terapiService) FindByDateRange(start, end time.Time) ([]dto2.TerapiResponse, rest_err.APIError) {
 	var terapiListDisplay []dto2.TerapiResponse
 
-	terapiList := dao.TerapiDao.FindByDateRange(start, end)
+	terapiList, err := dao.TerapiDao.FindByDateRange(start, end)
+	if err != nil {
+		return nil, rest_err.NewInternalServerError("gagal query terapi", err)
+	}
 
 	for _, t := range terapiList {
 		terapiDisplay, err := t.TranslateToRes()
@@ -73,5 +82,5 @@ func (p *terapiService) FindByDateRange(start, end time.Time) []dto2.TerapiRespo
 		terapiListDisplay = append(terapiListDisplay, *terapiDisplay)
 	}
 
-	return terapiListDisplay
+	return terapiListDisplay, nil
 }
