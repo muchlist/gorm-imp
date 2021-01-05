@@ -2,9 +2,9 @@ package terapi_services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"
-	"github.com/muchlist/gorm-imp/domains/dto"
 	"github.com/muchlist/gorm-imp/domains/pegawai"
 	"github.com/muchlist/gorm-imp/domains/terapi"
+	dto2 "github.com/muchlist/gorm-imp/dto"
 	"math/rand"
 	"time"
 )
@@ -16,14 +16,14 @@ var (
 type terapiService struct{}
 
 type terapiServiceInterface interface {
-	Create(data dto.TerapiRequest) (*dto.Terapi, rest_err.APIError)
-	Find() []dto.TerapiResponse
-	FindByDateRange(start, end time.Time) []dto.TerapiResponse
+	Create(data dto2.TerapiRequest) (*dto2.Terapi, rest_err.APIError)
+	Find() []dto2.TerapiResponse
+	FindByDateRange(start, end time.Time) []dto2.TerapiResponse
 }
 
-func (p *terapiService) Create(data dto.TerapiRequest) (*dto.Terapi, rest_err.APIError) {
+func (p *terapiService) Create(data dto2.TerapiRequest) (*dto2.Terapi, rest_err.APIError) {
 
-	terapiData, err := terapi.TranslateResToEntity(data)
+	terapiData, err := data.TranslateToEntity()
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("error mapping terapi request ke entity", err)
 	}
@@ -47,11 +47,11 @@ func (p *terapiService) Create(data dto.TerapiRequest) (*dto.Terapi, rest_err.AP
 	return &terapiResponse, nil
 }
 
-func (p *terapiService) Find() []dto.TerapiResponse {
-	var terapiListDisplay []dto.TerapiResponse
+func (p *terapiService) Find() []dto2.TerapiResponse {
+	var terapiListDisplay []dto2.TerapiResponse
 	terapiList := terapi.TerapiDao.Find()
 	for _, t := range terapiList {
-		terapiDisplay, err := terapi.TranslateEntityToRes(t)
+		terapiDisplay, err := t.TranslateToRes()
 		if err != nil {
 			continue
 		}
@@ -61,13 +61,13 @@ func (p *terapiService) Find() []dto.TerapiResponse {
 	return terapiListDisplay
 }
 
-func (p *terapiService) FindByDateRange(start, end time.Time) []dto.TerapiResponse {
-	var terapiListDisplay []dto.TerapiResponse
+func (p *terapiService) FindByDateRange(start, end time.Time) []dto2.TerapiResponse {
+	var terapiListDisplay []dto2.TerapiResponse
 
 	terapiList := terapi.TerapiDao.FindByDateRange(start, end)
 
 	for _, t := range terapiList {
-		terapiDisplay, err := terapi.TranslateEntityToRes(t)
+		terapiDisplay, err := t.TranslateToRes()
 		if err != nil {
 			continue
 		}

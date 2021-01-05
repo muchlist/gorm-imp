@@ -2,8 +2,8 @@ package pengeluaran_services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"
-	"github.com/muchlist/gorm-imp/domains/dto"
 	"github.com/muchlist/gorm-imp/domains/pengeluaran"
+	dto2 "github.com/muchlist/gorm-imp/dto"
 	"time"
 )
 
@@ -14,17 +14,17 @@ var (
 type pengeluaranService struct{}
 
 type pengeluaranServiceInterface interface {
-	Find() []dto.Pengeluaran
-	Create(data dto.PengeluaranRequest) (*dto.Pengeluaran, rest_err.APIError)
+	Find() []dto2.Pengeluaran
+	Create(data dto2.PengeluaranRequest) (*dto2.Pengeluaran, rest_err.APIError)
 }
 
-func (p *pengeluaranService) Find() []dto.Pengeluaran {
+func (p *pengeluaranService) Find() []dto2.Pengeluaran {
 	pengeluaranList := pengeluaran.PengeluaranDao.Find()
 	return pengeluaranList
 }
 
-func (p *pengeluaranService) Create(data dto.PengeluaranRequest) (*dto.Pengeluaran, rest_err.APIError) {
-	pengeluaranData, err := pengeluaran.TranslateReqToEntity(data)
+func (p *pengeluaranService) Create(data dto2.PengeluaranRequest) (*dto2.Pengeluaran, rest_err.APIError) {
+	pengeluaranData, err := data.TranslateToEntity()
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("gagal mapping pengeluaranRequest ke pengeluaran", err)
 	}

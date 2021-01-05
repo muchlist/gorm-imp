@@ -2,7 +2,7 @@ package terapi
 
 import (
 	"github.com/muchlist/gorm-imp/database"
-	"github.com/muchlist/gorm-imp/domains/dto"
+	dto2 "github.com/muchlist/gorm-imp/dto"
 	"time"
 )
 
@@ -13,12 +13,12 @@ var (
 type terapiDao struct{}
 
 type terapiDaoInterface interface {
-	Create(data dto.Terapi) (dto.Terapi, error)
-	Find() []dto.Terapi
-	FindByDateRange(start, end time.Time) []dto.Terapi
+	Create(data dto2.Terapi) (dto2.Terapi, error)
+	Find() []dto2.Terapi
+	FindByDateRange(start, end time.Time) []dto2.Terapi
 }
 
-func (p *terapiDao) Create(data dto.Terapi) (dto.Terapi, error) {
+func (p *terapiDao) Create(data dto2.Terapi) (dto2.Terapi, error) {
 	db := database.DbConn
 
 	tx := db.Begin()
@@ -26,14 +26,14 @@ func (p *terapiDao) Create(data dto.Terapi) (dto.Terapi, error) {
 	err := tx.Create(&terapiData).Error
 	if err != nil {
 		tx.Rollback()
-		return dto.Terapi{}, err
+		return dto2.Terapi{}, err
 	}
 
-	var pasienToUpdate dto.Pasien
+	var pasienToUpdate dto2.Pasien
 	err = tx.First(&pasienToUpdate, terapiData.PasienID).Error
 	if err != nil {
 		tx.Rollback()
-		return dto.Terapi{}, err
+		return dto2.Terapi{}, err
 	}
 
 	pasienToUpdate.JumlahTerapi = pasienToUpdate.JumlahTerapi + 1
@@ -41,7 +41,7 @@ func (p *terapiDao) Create(data dto.Terapi) (dto.Terapi, error) {
 	err = tx.Save(&pasienToUpdate).Error
 	if err != nil {
 		tx.Rollback()
-		return dto.Terapi{}, err
+		return dto2.Terapi{}, err
 	}
 
 	tx.Commit()
@@ -49,17 +49,17 @@ func (p *terapiDao) Create(data dto.Terapi) (dto.Terapi, error) {
 	return terapiData, nil
 }
 
-func (p *terapiDao) Find() []dto.Terapi {
+func (p *terapiDao) Find() []dto2.Terapi {
 	db := database.DbConn
-	var terapis []dto.Terapi
+	var terapis []dto2.Terapi
 	db.Find(&terapis)
 
 	return terapis
 }
 
-func (p *terapiDao) FindByDateRange(start, end time.Time) []dto.Terapi {
+func (p *terapiDao) FindByDateRange(start, end time.Time) []dto2.Terapi {
 	db := database.DbConn
-	var terapis []dto.Terapi
+	var terapis []dto2.Terapi
 	db.Where("tglterapi >= ? AND tglterapi <= ?", start, end).Find(&terapis)
 	// SELECT * FROM terapis WHERE tglterapi >= '2000-01-01 00:00:00' AND tglterapi <= '2000-01-01 00:00:00';
 

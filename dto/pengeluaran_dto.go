@@ -2,6 +2,7 @@ package dto
 
 import (
 	validation "github.com/go-ozzo/ozzo-validation/v4"
+	"github.com/mashingan/smapping"
 	"time"
 )
 
@@ -30,4 +31,13 @@ func (b PengeluaranRequest) Validate() error {
 		validation.Field(&b.BiayaSatuan, validation.Required),
 		validation.Field(&b.Qty, validation.Required),
 	)
+}
+
+func (b PengeluaranRequest) TranslateToEntity() (*Pengeluaran, error) {
+	pengeluaranEntity := Pengeluaran{}
+	err := smapping.FillStruct(&pengeluaranEntity, smapping.MapFields(&b))
+	if err != nil {
+		return nil, err
+	}
+	return &pengeluaranEntity, err
 }

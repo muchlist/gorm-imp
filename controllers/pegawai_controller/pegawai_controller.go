@@ -3,7 +3,7 @@ package pegawai_controller
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/muchlist/erru_utils_go/rest_err"
-	"github.com/muchlist/gorm-imp/domains/dto"
+	dto2 "github.com/muchlist/gorm-imp/dto"
 	"github.com/muchlist/gorm-imp/services/pegawai_services"
 )
 
@@ -13,7 +13,7 @@ func FindPegawai(c *fiber.Ctx) error {
 }
 
 func CreatePegawai(c *fiber.Ctx) error {
-	var pegawaiFromBody dto.PegawaiRequest
+	var pegawaiFromBody dto2.PegawaiRequest
 	err := c.BodyParser(&pegawaiFromBody)
 	if err != nil {
 		apiErr := rest_err.NewBadRequestError(err.Error())

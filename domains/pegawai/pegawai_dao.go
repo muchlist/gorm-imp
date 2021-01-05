@@ -2,7 +2,7 @@ package pegawai
 
 import (
 	"github.com/muchlist/gorm-imp/database"
-	"github.com/muchlist/gorm-imp/domains/dto"
+	dto2 "github.com/muchlist/gorm-imp/dto"
 )
 
 var (
@@ -12,11 +12,11 @@ var (
 type pegawaiDao struct{}
 
 type PegawaiDaoInterface interface {
-	Find() []dto.Pegawai
-	Create(data dto.Pegawai) (dto.Pegawai, error)
+	Find() []dto2.Pegawai
+	Create(data dto2.Pegawai) (dto2.Pegawai, error)
 }
 
-func (p *pegawaiDao) Create(data dto.Pegawai) (dto.Pegawai, error) {
+func (p *pegawaiDao) Create(data dto2.Pegawai) (dto2.Pegawai, error) {
 	db := database.DbConn
 	var pegawai = data
 	result := db.Create(&pegawai)
@@ -24,9 +24,9 @@ func (p *pegawaiDao) Create(data dto.Pegawai) (dto.Pegawai, error) {
 	return pegawai, result.Error
 }
 
-func (p *pegawaiDao) Find() []dto.Pegawai {
+func (p *pegawaiDao) Find() []dto2.Pegawai {
 	db := database.DbConn
-	var pegawais []dto.Pegawai
+	var pegawais []dto2.Pegawai
 	db.Find(&pegawais)
 
 	return pegawais

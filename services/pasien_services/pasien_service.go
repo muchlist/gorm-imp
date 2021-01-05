@@ -2,8 +2,8 @@ package pasien_services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"
-	"github.com/muchlist/gorm-imp/domains/dto"
 	"github.com/muchlist/gorm-imp/domains/pasien"
+	dto2 "github.com/muchlist/gorm-imp/dto"
 	"strconv"
 )
 
@@ -14,17 +14,17 @@ var (
 type pasienService struct{}
 
 type pasienServiceInterface interface {
-	Find(gender string) []dto.Pasien
-	Create(data dto.PasienRequest) (*dto.Pasien, rest_err.APIError)
+	Find(gender string) []dto2.Pasien
+	Create(data dto2.PasienRequest) (*dto2.Pasien, rest_err.APIError)
 }
 
-func (p *pasienService) Find(gender string) []dto.Pasien {
+func (p *pasienService) Find(gender string) []dto2.Pasien {
 	return pasien.PasienDao.Find(gender)
 }
 
-func (p *pasienService) Create(data dto.PasienRequest) (*dto.Pasien, rest_err.APIError) {
+func (p *pasienService) Create(data dto2.PasienRequest) (*dto2.Pasien, rest_err.APIError) {
 
-	pasienData, err := pasien.TranslateReqToEntity(data)
+	pasienData, err := data.TranslateReqToEntity()
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("error mapping pegawai response", err)
 	}

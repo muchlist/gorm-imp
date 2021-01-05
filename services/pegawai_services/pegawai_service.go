@@ -2,8 +2,8 @@ package pegawai_services
 
 import (
 	"github.com/muchlist/erru_utils_go/rest_err"
-	"github.com/muchlist/gorm-imp/domains/dto"
 	"github.com/muchlist/gorm-imp/domains/pegawai"
+	dto2 "github.com/muchlist/gorm-imp/dto"
 	"github.com/muchlist/gorm-imp/utils/crypto"
 )
 
@@ -14,15 +14,15 @@ var (
 type pegawaiService struct{}
 
 type pegawaiServiceInterface interface {
-	Find() []dto.PegawaiResponse
-	Create(data dto.PegawaiRequest) (*dto.PegawaiResponse, rest_err.APIError)
+	Find() []dto2.PegawaiResponse
+	Create(data dto2.PegawaiRequest) (*dto2.PegawaiResponse, rest_err.APIError)
 }
 
-func (p *pegawaiService) Find() []dto.PegawaiResponse {
-	var pegawaiListDisplay []dto.PegawaiResponse
+func (p *pegawaiService) Find() []dto2.PegawaiResponse {
+	var pegawaiListDisplay []dto2.PegawaiResponse
 	pegawaiList := pegawai.PegawaiDao.Find()
 	for _, p := range pegawaiList {
-		pegawaiDisplay, err := pegawai.TranslateEntityToRes(p)
+		pegawaiDisplay, err := p.TranslateToResponse()
 		if err != nil {
 			continue
 		}
@@ -32,8 +32,8 @@ func (p *pegawaiService) Find() []dto.PegawaiResponse {
 	return pegawaiListDisplay
 }
 
-func (p *pegawaiService) Create(data dto.PegawaiRequest) (*dto.PegawaiResponse, rest_err.APIError) {
-	pegawaiData, err := pegawai.TranslateReqToEntity(data)
+func (p *pegawaiService) Create(data dto2.PegawaiRequest) (*dto2.PegawaiResponse, rest_err.APIError) {
+	pegawaiData, err := data.TranslateToEntity()
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("gagal mapping pegawaiReq ke pegawai", err)
 	}
@@ -47,7 +47,7 @@ func (p *pegawaiService) Create(data dto.PegawaiRequest) (*dto.PegawaiResponse, 
 		return nil, rest_err.NewInternalServerError("error create", err)
 	}
 
-	pegawaiDisplay, err := pegawai.TranslateEntityToRes(pegawaiResponse)
+	pegawaiDisplay, err := pegawaiResponse.TranslateToResponse()
 	if err != nil {
 		return nil, rest_err.NewInternalServerError("error mapping pegawai response", err)
 	}

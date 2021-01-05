@@ -2,6 +2,7 @@ package dto
 
 import (
 	validation "github.com/go-ozzo/ozzo-validation/v4"
+	"github.com/mashingan/smapping"
 	"time"
 )
 
@@ -48,4 +49,22 @@ type TerapiResponse struct {
 	Layanan   string    `json:"layanan"`
 	Biaya     float64   `json:"biaya"`
 	Upah      float64   `json:"upah"`
+}
+
+func (b TerapiRequest) TranslateToEntity() (*Terapi, error) {
+	terapiEntity := Terapi{}
+	err := smapping.FillStruct(&terapiEntity, smapping.MapFields(&b))
+	if err != nil {
+		return nil, err
+	}
+	return &terapiEntity, err
+}
+
+func (b Terapi) TranslateToRes() (*TerapiResponse, error) {
+	terapiResponse := TerapiResponse{}
+	err := smapping.FillStruct(&terapiResponse, smapping.MapFields(&b))
+	if err != nil {
+		return nil, err
+	}
+	return &terapiResponse, err
 }

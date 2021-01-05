@@ -2,6 +2,7 @@ package dto
 
 import (
 	validation "github.com/go-ozzo/ozzo-validation/v4"
+	"github.com/mashingan/smapping"
 )
 
 type Pegawai struct {
@@ -41,4 +42,22 @@ func (b PegawaiRequest) Validate() error {
 		validation.Field(&b.Password, validation.Required),
 		validation.Field(&b.Level, validation.Max(2)),
 	)
+}
+
+func (b Pegawai) TranslateToResponse() (*PegawaiResponse, error) {
+	pegawaiResponse := PegawaiResponse{}
+	err := smapping.FillStruct(&pegawaiResponse, smapping.MapFields(&b))
+	if err != nil {
+		return nil, err
+	}
+	return &pegawaiResponse, err
+}
+
+func (b PegawaiRequest) TranslateToEntity() (*Pegawai, error) {
+	pegawaiEntity := Pegawai{}
+	err := smapping.FillStruct(&pegawaiEntity, smapping.MapFields(&b))
+	if err != nil {
+		return nil, err
+	}
+	return &pegawaiEntity, err
 }

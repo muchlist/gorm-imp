@@ -3,7 +3,7 @@ package pengeluaran_controller
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/muchlist/erru_utils_go/rest_err"
-	"github.com/muchlist/gorm-imp/domains/dto"
+	dto2 "github.com/muchlist/gorm-imp/dto"
 	"github.com/muchlist/gorm-imp/services/pengeluaran_services"
 )
 
@@ -13,7 +13,7 @@ func FindPengeluaran(c *fiber.Ctx) error {
 }
 
 func CreatePengeluaran(c *fiber.Ctx) error {
-	var pengeluaranFromBody dto.PengeluaranRequest
+	var pengeluaranFromBody dto2.PengeluaranRequest
 	err := c.BodyParser(&pengeluaranFromBody)
 	if err != nil {
 		apiErr := rest_err.NewBadRequestError(err.Error())

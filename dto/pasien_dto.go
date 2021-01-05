@@ -2,6 +2,7 @@ package dto
 
 import (
 	validation "github.com/go-ozzo/ozzo-validation/v4"
+	"github.com/mashingan/smapping"
 )
 
 type Pasien struct {
@@ -32,4 +33,13 @@ func (b PasienRequest) Validate() error {
 		validation.Field(&b.NoWa, validation.Required),
 		validation.Field(&b.Alamat, validation.Required),
 	)
+}
+
+func (b PasienRequest) TranslateReqToEntity() (*Pasien, error) {
+	pasienEntity := Pasien{}
+	err := smapping.FillStruct(&pasienEntity, smapping.MapFields(&b))
+	if err != nil {
+		return nil, err
+	}
+	return &pasienEntity, err
 }

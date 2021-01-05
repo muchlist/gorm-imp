@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9533f2cf-eb70-46ed-bd88-de4c5af8b263" name="Default Changelist" comment="pasien sorted by jumlah_terapi">
-      <change afterPath="$PROJECT_DIR$/controllers/pengeluaran_controller/pengeluaran_controller.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domains/pengeluaran/pengeluaran_translate.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/pengeluaran_services/pengeluaran_service.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/migrate/migrate_db.go" afterDir="false" />
+    <list default="true" id="9533f2cf-eb70-46ed-bd88-de4c5af8b263" name="Default Changelist" comment="pengeluaran endpoint">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/pasien_controller/pasien_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/pasien_controller/pasien_controller.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/pegawai_controller/pegawai_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/pegawai_controller/pegawai_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domains/dto/pengeluaran_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/dto/pengeluaran_dto.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domains/pasien/pasien_translate.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/pasien/pasien_translate.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/pengeluaran_controller/pengeluaran_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/pengeluaran_controller/pengeluaran_controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/terapi_controller/terapi_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/terapi_controller/terapi_controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/dto/pasien_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/dto/pasien_dto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/dto/pegawai_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/dto/pegawai_dto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/dto/pengeluaran_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/dto/pengeluaran_dto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/dto/terapi_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/dto/terapi_dto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/pasien/pasien_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/pasien/pasien_dao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/pasien/pasien_translate.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/domains/pegawai/pegawai_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/pegawai/pegawai_dao.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domains/pegawai/pegawai_translate.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/pegawai/pegawai_translate.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/pegawai/pegawai_translate.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/domains/pengeluaran/pengeluaran_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/pengeluaran/pengeluaran_dao.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/pengeluaran/pengeluaran_translate.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/terapi/terapi_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/domains/terapi/terapi_dao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domains/terapi/terapi_translate.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pasien_services/pasien_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/pasien_services/pasien_service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/pegawai_services/pegawai_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/pegawai_services/pegawai_service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pengeluaran_services/pengeluaran_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/pengeluaran_services/pengeluaran_service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/terapi_services/terapi_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/terapi_services/terapi_service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/migrate/migrate_db.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/migrate/migrate_db.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,11 +65,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\CODING\gorm-imp\dto" />
       <recent name="D:\CODING\gorm-imp\domains\dto" />
       <recent name="D:\CODING\gorm-imp\domains\pasien" />
       <recent name="D:\CODING\gorm-imp\domains\pasien\pasien_dto" />
       <recent name="D:\CODING\gorm-imp\utils\crypto" />
-      <recent name="D:\CODING\gorm-imp\controllers\book_controller" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -93,7 +102,8 @@
     <MESSAGE value="terapi transaction" />
     <MESSAGE value="prefent package cycle error" />
     <MESSAGE value="pasien sorted by jumlah_terapi" />
-    <option name="LAST_COMMIT_MESSAGE" value="pasien sorted by jumlah_terapi" />
+    <MESSAGE value="pengeluaran endpoint" />
+    <option name="LAST_COMMIT_MESSAGE" value="pengeluaran endpoint" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

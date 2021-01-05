@@ -2,7 +2,7 @@ package pengeluaran
 
 import (
 	"github.com/muchlist/gorm-imp/database"
-	"github.com/muchlist/gorm-imp/domains/dto"
+	dto2 "github.com/muchlist/gorm-imp/dto"
 )
 
 var (
@@ -12,24 +12,24 @@ var (
 type pengeluaranDao struct{}
 
 type PengeluaranDaoInterface interface {
-	Find() []dto.Pengeluaran
-	Create(data dto.Pengeluaran) (dto.Pengeluaran, error)
+	Find() []dto2.Pengeluaran
+	Create(data dto2.Pengeluaran) (dto2.Pengeluaran, error)
 }
 
-func (p *pengeluaranDao) Create(data dto.Pengeluaran) (dto.Pengeluaran, error) {
+func (p *pengeluaranDao) Create(data dto2.Pengeluaran) (dto2.Pengeluaran, error) {
 	db := database.DbConn
 	var pengeluaran = data
 	err := db.Create(&pengeluaran).Error
 	if err != nil {
-		return dto.Pengeluaran{}, err
+		return dto2.Pengeluaran{}, err
 	}
 
 	return pengeluaran, nil
 }
 
-func (p *pengeluaranDao) Find() []dto.Pengeluaran {
+func (p *pengeluaranDao) Find() []dto2.Pengeluaran {
 	db := database.DbConn
-	var pengeluarans []dto.Pengeluaran
+	var pengeluarans []dto2.Pengeluaran
 	db.Find(&pengeluarans)
 
 	return pengeluarans
