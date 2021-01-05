@@ -8,7 +8,10 @@ import (
 )
 
 func FindPengeluaran(c *fiber.Ctx) error {
-	pengeluaranData := services.PengeluaranService.Find()
+	pengeluaranData, apiErr := services.PengeluaranService.Find()
+	if apiErr != nil {
+		return c.Status(apiErr.Status()).JSON(apiErr)
+	}
 	return c.JSON(pengeluaranData)
 }
 
@@ -26,9 +29,8 @@ func CreatePengeluaran(c *fiber.Ctx) error {
 		return c.Status(apiErr.Status()).JSON(apiErr)
 	}
 
-	pengeluaranResp, err := services.PengeluaranService.Create(pengeluaranFromBody)
-	if err != nil {
-		apiErr := rest_err.NewBadRequestError("Input Salah")
+	pengeluaranResp, apiErr := services.PengeluaranService.Create(pengeluaranFromBody)
+	if apiErr != nil {
 		return c.Status(apiErr.Status()).JSON(apiErr)
 	}
 
